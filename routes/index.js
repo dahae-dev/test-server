@@ -1,9 +1,40 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const db = require("../models");
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get("/posts", async (req, res, next) => {
+  try {
+    const results = await db.Post.findAll({
+      include: [
+        {
+          model: db.Author,
+          required: true,
+          attributes: {
+            include: ["name", "role", "avatar", "location"],
+            exclude: ["created_at", "updated_at"]
+          }
+        }
+      ]
+    });
+    console.log("results: ", results[0].dataValues);
+
+    const posts = results.map(result => ({
+      title: result.dataValues.title,
+      body: result.dataValues.body,
+      tags: result.dataValues.tags,
+      image_url: result.dataValues.image_url,
+      created_at: result.dataValues.created_at,
+      updated_at: result.dataValues.updated_at,
+      name: result.Author.dataValues.name,
+      role: result.Author.dataValues.role,
+      avatar: result.Author.dataValues.avatar,
+      location: result.Author.dataValues.location
+    }));
+
+    res.json(posts);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;

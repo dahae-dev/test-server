@@ -8,7 +8,6 @@ const dotenv = require("dotenv");
 const sequelize = require("./models").sequelize;
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 
 dotenv.config();
 
@@ -23,7 +22,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../client/build")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
