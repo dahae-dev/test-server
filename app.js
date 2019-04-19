@@ -5,12 +5,16 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const dotenv = require("dotenv");
 
+const sequelize = require("./models").sequelize;
+
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
 dotenv.config();
 
 const app = express();
+
+sequelize.sync({ logging: console.log }); // { force: true }
 
 app.use(logger("dev"));
 app.use(express.json());
