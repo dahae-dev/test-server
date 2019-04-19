@@ -17,6 +17,9 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 db.Author = require("./Author")(sequelize, Sequelize);
 db.Post = require("./Post")(sequelize, Sequelize);
 
+db.Author.hasMany(db.Post, { foreignKey: "authorId", sourceKey: "id" });
+db.Post.belongsTo(db.Author, { foreignKey: "authorId", targetKey: "id" });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

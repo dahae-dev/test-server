@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      charset: "utf8mb4"
+      charset: "utf8mb4",
+      timestamps: false
     }
   );
 
