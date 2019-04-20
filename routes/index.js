@@ -14,7 +14,8 @@ router.get("/posts", async (req, res, next) => {
             exclude: ["created_at", "updated_at"]
           }
         }
-      ]
+      ],
+      order: [["id", "ASC"]]
     });
     console.log("results: ", results[0].dataValues);
 
